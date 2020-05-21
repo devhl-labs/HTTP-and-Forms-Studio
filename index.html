@@ -2,61 +2,116 @@
 
 <head>
 	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
 	<script>
+        let engines = {
+            "Google": "https://www.google.com/search",
+            "DuckDuckGo": "https://duckduckgo.com/",
+            "Bing": "https://bing.com/search",
+            "Ask": "https://ask.com/web"
+        };
 
-		window.addEventListener("load", function(){
+		let engine = engines.Google;
+
+		window.addEventListener("load", function () {
 			searchForm.addEventListener('submit', setSearchEngine);
+			bootStrapForm.addEventListener('submit', bootStrapSubmit);
+
+			let engineButtons = document.querySelectorAll('#navbarColor01 > ul > li');
+			for (let engineButton of engineButtons) {
+				engineButton.addEventListener('click', engineButtonChanged);
+            }
 		});
+
+		function bootStrapSubmit(event) {
+			if (bootStrapInput.value === '') {
+				event.preventDefault();
+				return;
+			}
+
+			bootStrapForm.action = engine;			
+        }
+
+		function engineButtonChanged(event) {
+			let engineButtons = document.querySelectorAll('#navbarColor01 > ul > li');
+			for (let engineButton of engineButtons) {
+				engineButton.classList = "nav-item";
+			}
+
+			event.target.parentElement.classList = "nav-item active";
+			engine = engines[event.target.innerHTML];
+			event.preventDefault();
+        }
 
 		function setSearchEngine(event) {
 			if (q.value === '') {
 				q.style = 'background-color:yellow;';
 				event.preventDefault();
 				return;
-            }
+			}
 
-			let actions = {
-				"google": "https://www.google.com/search",
-                "duckDuckGo": "https://duckduckgo.com/",
-				"bing": "https://bing.com/search",
-				"ask": "https://ask.com/web"
-			};
-
-			let engine = document.querySelector('input[name=engine]:checked');
+			engine = document.querySelector('input[name=engine]:checked');
 
 			if (engine === null) {
 				event.preventDefault();
 				return;
-            }
-			
-			searchForm.action = actions[engine.value];
+			}
+
+			searchForm.action = engines[engine.value];
 		}
 
 	</script>
 </head>
 
 <body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarColor01">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Google</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">DuckDuckGo</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Bing</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Ask</a>
+				</li>
+			</ul>
+			<form class="form-inline my-2 my-lg-0" id="bootStrapForm" method="get">
+				<input class="form-control mr-sm-2" type="text" placeholder="Search" id="bootStrapInput" required>
+				<button class="btn btn-secondary my-2 my-sm-0" type="submit" form="bootStrapForm">Search</button>
+			</form>
+		</div>
+	</nav>
+
 
 	<form id="searchForm" method="get">
-		<input type="text" name="q" id="q" required/>
+		<input type="text" name="q" id="q" required />
 		<label>
-			<input type="radio" name="engine" value="google"/>
+			<input type="radio" name="engine" value="Google" />
 			Google
 		</label>
 		<label>
-			<input type="radio" name="engine" value="duckDuckGo"/>
+			<input type="radio" name="engine" value="DuckDuckGo" />
 			DuckDuckGo
 
 		</label>
 		<label>
-			<input type="radio" name="engine" value="bing"/>
+			<input type="radio" name="engine" value="Bing" />
 			Bing
 		</label>
 		<label>
-			<input type="radio" name="engine" value="ask"/>
+			<input type="radio" name="engine" value="Ask" />
 			Ask
 		</label>
-		<input type="submit" value="Go!"/>
+		<input type="submit" value="Go!" />
 	</form>
 
 </body>
