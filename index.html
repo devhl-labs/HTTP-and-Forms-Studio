@@ -3,13 +3,20 @@
 <head>
 	<meta charset="utf-8"> 
 	<link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+	<style>
+        #searchForm{
+			margin: 25px;
+        }
+
+	</style>
+
 	<script>
-        let engines = {
-            "Google": "https://www.google.com/search",
-            "DuckDuckGo": "https://duckduckgo.com/",
-            "Bing": "https://bing.com/search",
-            "Ask": "https://ask.com/web"
-        };
+		let engines = {
+			"Google": "https://www.google.com/search",
+			"DuckDuckGo": "https://duckduckgo.com/",
+			"Bing": "https://bing.com/search",
+			"Ask": "https://ask.com/web"
+		};
 
 		let engine = engines.Google;
 
@@ -20,7 +27,7 @@
 			let engineButtons = document.querySelectorAll('#navbarColor01 > ul > li');
 			for (let engineButton of engineButtons) {
 				engineButton.addEventListener('click', engineButtonChanged);
-            }
+			}
 		});
 
 		function bootStrapSubmit(event) {
@@ -29,8 +36,8 @@
 				return;
 			}
 
-			bootStrapForm.action = engine;			
-        }
+			bootStrapForm.action = engine;
+		}
 
 		function engineButtonChanged(event) {
 			let engineButtons = document.querySelectorAll('#navbarColor01 > ul > li');
@@ -41,7 +48,7 @@
 			event.target.parentElement.classList = "nav-item active";
 			engine = engines[event.target.innerHTML];
 			event.preventDefault();
-        }
+		}
 
 		function setSearchEngine(event) {
 			if (q.value === '') {
@@ -85,7 +92,7 @@
 				</li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0" id="bootStrapForm" method="get">
-				<input class="form-control mr-sm-2" type="text" placeholder="Search" id="bootStrapInput" required>
+				<input class="form-control mr-sm-2" type="text" placeholder="Search" name="q" id="bootStrapInput" required>
 				<button class="btn btn-secondary my-2 my-sm-0" type="submit" form="bootStrapForm">Search</button>
 			</form>
 		</div>
